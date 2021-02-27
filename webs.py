@@ -3,6 +3,7 @@ from requests.exceptions import HTTPError
 from bs4 import BeautifulSoup
 import re
 import os
+import subprocess
 
 #function for making lists of all the resources based on soup
 def find_list_resources (tag, attribute,soup):
@@ -57,7 +58,11 @@ try:
     #save modified index page with new res sources
     with open("index.html", "w") as text_file:
        text_file.write(indexfile)
-       
+    #add stuff to git
+    subprocess.call('git add .', cwd=os.getcwd())
+    subprocess.call('git commit -m "webscraper commit', cwd=os.getcwd())
+    subprocess.call('git push origin main', cwd=os.getcwd())
+      
 except HTTPError as http_err:
     print(f'HTTP error occurred: {http_err}')
 except Exception as err:
